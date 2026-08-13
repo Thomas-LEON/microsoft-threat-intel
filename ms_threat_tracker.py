@@ -211,7 +211,7 @@ def generate_executive_summary(articles, covered_incidents=None):
 
         **Incident Metadata:**
         - **Primary Category:** [One keyword: AZURE, M365, COPILOT, CVE, ENTRA ID, SUPPLY CHAIN, EXCHANGE, TEAMS, WINDOWS SERVER, DEFENDER, POWER PLATFORM, etc.]
-        - **Timeline:** [Event: most precise date | Disclosed: most precise disclosure date]
+        - **Timeline:** [Event: most precise date available from sources (format: Month DD, YYYY — if the exact day is not in the source, use "Early/Mid/Late Month YYYY" instead of just "Month YYYY") | Disclosed: same precision rule]
         - **Impacted Products:** [Specific Microsoft products/services affected]
         - **Impacted Country:** [Country impacted, or "Global" / "Unknown"]
         - **List of Companies Impacted:** [Companies affected, if known]
