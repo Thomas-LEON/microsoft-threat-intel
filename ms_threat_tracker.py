@@ -61,6 +61,12 @@ MICROSOFT_KEYWORDS = [
     ".net", "dotnet", "asp.net", "nuget",
     "hyper-v", "hyperv", "windows 11", "windows 10",
     "edge browser", "microsoft edge",
+    # Research paper & academic keywords
+    "microsoft research", "whitepaper", "white paper", "research paper",
+    "proof of concept", "proof-of-concept", "poc exploit",
+    "academic", "arxiv", "usenix", "ieee", "ndss", "ccs 2026", "s&p 2026",
+    "black hat", "def con", "defcon", "rsa conference",
+    "security analysis", "vulnerability research", "attack technique",
 ]
 
 MICROSOFT_FEED_DOMAINS = [
@@ -183,6 +189,11 @@ def generate_executive_summary(articles, covered_incidents=None):
            SharePoint/OneDrive data exposure, Teams-based phishing, malicious Power Automate flows.
         7. **Microsoft Infrastructure Attacks**: Attacks ON Microsoft itself (corporate breaches,
            Midnight Blizzard/Nobelium campaigns, source code leaks, internal system compromises).
+        8. **Security Research & Academic Papers**: Peer-reviewed papers, conference presentations
+           (Black Hat, DEF CON, USENIX, IEEE S&P, NDSS, CCS), whitepapers, or proof-of-concept (PoC)
+           research that directly targets or analyzes Microsoft products, protocols, or architectures
+           (e.g., novel attack techniques against NTLM, Kerberos, Azure AD, Copilot, UEFI Secure Boot).
+           Include even if no active exploitation is confirmed — research papers define the emerging risk horizon.
 
         === STRICT EXCLUSION CRITERIA (MUST ignore) ===
         1. Incidents with NO connection to Microsoft products, services, or platforms.
