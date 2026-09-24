@@ -1,4 +1,5 @@
 import os
+import time
 import datetime
 import feedparser
 import re
@@ -289,22 +290,33 @@ def generate_executive_summary(articles, covered_incidents=None):
             for ci in covered_incidents:
                 prompt += f"- {ci}\n"
 
-        models_to_try = ["gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"]
+        models_to_try = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash"]
+        max_retries = 3
 
         for model_name in models_to_try:
-            try:
-                print(f"Attempting generation with model {model_name}...")
-                response = client.models.generate_content(
-                    model=model_name,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(temperature=0.2),
-                )
-                return response.text
-            except Exception as e:
-                print(f"Failed with model {model_name}: {e}")
-                continue
+            for attempt in range(max_retries):
+                try:
+                    print(f"Attempting generation with model {model_name} (Attempt {attempt + 1}/{max_retries})...")
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(temperature=0.2),
+                    )
+                    return response.text
+                except Exception as e:
+                    error_msg = str(e).lower()
+                    print(f"Failed with model {model_name}: {e}")
+                    # If it's a rate limit or server overload, wait and retry
+                    if "429" in error_msg or "503" in error_msg or "overloaded" in error_msg or "quota" in error_msg:
+                        wait_time = (2 ** attempt) * 10  # 10s, 20s, 40s...
+                        print(f"Rate limit/overload detected. Waiting {wait_time}s before retrying...")
+                        time.sleep(wait_time)
+                        continue
+                    else:
+                        # For non-transient errors, break out of retries and try next model
+                        break
 
-        return "Error: Unable to generate report with available Gemini models (3.6, 3.5, 3.1-lite)."
+        return "Error: Unable to generate report with available Gemini models (3.8, 3.7, 3.6) after retries."
 
     except Exception as e:
         return (
