@@ -33,9 +33,7 @@ jobs:
         with:
           timeout_minutes: 10
           max_attempts: 3
-          command: python ms_threat_tracker.py
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          command: GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" python ms_threat_tracker.py
 
       - name: Commit and Push Report
         run: |
