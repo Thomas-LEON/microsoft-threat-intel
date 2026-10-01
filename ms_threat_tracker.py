@@ -398,8 +398,8 @@ def main():
     # --- Deterministic Threat Score Calculation ---
     print("Computing deterministic risk score (CRQ/FAIR)...")
     match = re.search(
-        r"\*\(\s*Auditable Metrics\s*-\s*Threat Capability:\s*(\d+)/10\s*\|\s*"
-        r"Event Frequency:\s*(\d+)/10\s*\|\s*Business Impact:\s*(\d+)/10\s*\)\*",
+        r"\*?\(\s*Auditable Metrics\s*-\s*Threat Capability:\s*(\d+)/10\s*\|\s*"
+        r"Event Frequency:\s*(\d+)/10\s*\|\s*Business Impact:\s*(\d+)/10\s*\)\*?",
         report,
         re.IGNORECASE,
     )
