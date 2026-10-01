@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup
 # ============================================================================
 
 API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_API_KEY")
+print(f"DEBUG: API_KEY length: {len(API_KEY)}, starts with: {API_KEY[:4] if len(API_KEY) > 4 else API_KEY}")
 
 # ---------------------
 # RSS Feed Sources
