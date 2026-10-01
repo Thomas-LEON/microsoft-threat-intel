@@ -72,8 +72,8 @@ The LLM is prompted with **strict business rules** to ensure high-quality, Micro
 
 | Day | Time (UTC) | Purpose |
 |---|---|---|
-| **Monday** | 07:00 | Weekly security recap (covers previous 7 days) |
-| **Thursday** | 07:00 | Mid-week update (catches Patch Tuesday) |
+| **Monday** | 04:00 | Weekly security recap (covers previous 7 days) |
+| **Thursday** | 04:00 | Mid-week update (catches Patch Tuesday) |
 
 Manual trigger is also available via `workflow_dispatch` in the GitHub Actions UI.
 
