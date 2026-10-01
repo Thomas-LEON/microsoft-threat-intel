@@ -120,6 +120,7 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
         "gemini-3.6-flash",
     ]
 
+    errors_encountered = []
     for model_name in models_to_try:
         max_retries = 3 if model_name in ["gemini-3.8-flash", "gemini-3.7-flash"] else 1
         for attempt in range(max_retries):
@@ -137,6 +138,7 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
             except Exception as e:
                 error_msg = str(e).lower()
                 print(f"Failed with {model_name} (Attempt {attempt + 1}/{max_retries}): {e}")
+                errors_encountered.append(f"{model_name}: {e}")
                 if attempt < max_retries - 1:
                     if "429" in error_msg or "503" in error_msg or "overloaded" in error_msg or "quota" in error_msg:
                         print("Waiting 25s to purge RPM quota (Rate Limit)...")
@@ -145,8 +147,8 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
                         print("Non-transient error detected (e.g. invalid key). Breaking retry loop.")
                         break
                 continue
-
-    return "Error: Unable to generate report — Fail-Fast applied on all cascade models (3.8, 3.7, 3.6)."
+    error_details = " | ".join(errors_encountered)
+    return f"Error: Unable to generate report — Fail-Fast applied on all cascade models (3.8, 3.7, 3.6). Details: {error_details}"
 
 
 def is_microsoft_feed(feed_url: str) -> bool:
