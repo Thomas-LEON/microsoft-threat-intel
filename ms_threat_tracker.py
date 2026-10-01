@@ -134,10 +134,15 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
                 )
                 return response.text
             except Exception as e:
+                error_msg = str(e).lower()
                 print(f"Failed with {model_name} (Attempt {attempt + 1}/{max_retries}): {e}")
                 if attempt < max_retries - 1:
-                    print("Waiting 25s to purge RPM quota (Rate Limit)...")
-                    time.sleep(25)
+                    if "429" in error_msg or "503" in error_msg or "overloaded" in error_msg or "quota" in error_msg:
+                        print("Waiting 25s to purge RPM quota (Rate Limit)...")
+                        time.sleep(25)
+                    else:
+                        print("Non-transient error detected (e.g. invalid key). Breaking retry loop.")
+                        break
                 continue
 
     return "Error: Unable to generate report — Fail-Fast applied on all cascade models (3.8, 3.7, 3.6)."
