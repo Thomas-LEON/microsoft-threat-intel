@@ -2,8 +2,8 @@ name: Microsoft Security Weekly Tracker
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # Every Monday at 07:00 UTC
-    - cron: '0 7 * * 4'   # Every Thursday at 07:00 UTC (catches Patch Tuesday)
+    - cron: '0 4 * * 1'   # Every Monday at 04:00 UTC
+    - cron: '0 4 * * 4'   # Every Thursday at 04:00 UTC (catches Patch Tuesday)
   workflow_dispatch:       # Manual trigger from GitHub UI
 
 jobs:
