@@ -118,6 +118,7 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.6-flash",
+        "gemini-3.1-flash-lite",
     ]
 
     errors_encountered = []
@@ -148,7 +149,7 @@ def call_llm_with_fallback(prompt, client, temperature=0.2):
                         break
                 continue
     error_details = " | ".join(errors_encountered)
-    return f"Error: Unable to generate report — Fail-Fast applied on all cascade models (3.8, 3.7, 3.6). Details: {error_details}"
+    return f"Error: Unable to generate report — Fail-Fast applied on all cascade models (3.8, 3.7, 3.6, 3.1-lite). Details: {error_details}"
 
 
 def is_microsoft_feed(feed_url: str) -> bool:
